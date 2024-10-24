@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\QuizController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +30,9 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+//QuizController に関連するルートを定義
+Route::controller(QuizController::class)->group(function(){
+    //トップページにアクセスした時にindexを表示
+    Route::get('/','index')->name('quiz.index');
+});
