@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB; // 追加するとseederを利用したデータ生成が可能
 
-class UsersTableSeeder extends Seeder
+class RolesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,14 +15,16 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
-            'name' => 'auther1',
-            'email' => 'auther1@example.com',
-            'email_verified_at' => now(),
-            'password' => 'password1', 
+        
+        DB::table('roles')->insert([
+            'name' => 'admin', 
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-
+        DB::table('roles')->insert([
+            'name' => 'user', 
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 }

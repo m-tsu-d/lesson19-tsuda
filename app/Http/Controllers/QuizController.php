@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Question; //Questionモデルの参照
+use Illuminate\Support\Facades\Gate;    //Gateモデルの参照
 
 class QuizController extends Controller
 {
@@ -22,8 +23,13 @@ class QuizController extends Controller
     //createメソッドの定義
     public function create()
     {
-        //createのビューを返す
-        return view('quiz.create');
+        //adminの権限を持っていなかったら、403エラーを発生させる
+        if(!Gate::allows('admin')){
+            abort(403);
+        }else{
+            //createのビューを返す
+            return view('quiz.create');
+        }
     }
 
     //storeメソッドの定義

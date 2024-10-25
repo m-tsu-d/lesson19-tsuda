@@ -41,4 +41,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    //このユーザーが属する役割（多対多）
+    public function roles()
+    {
+        return $this->belongsToMany('App\Models\Role','role_user', 'user_id', 'role_id')->withTimestamps();
+    }
 }

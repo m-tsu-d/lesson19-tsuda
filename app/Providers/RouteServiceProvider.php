@@ -21,6 +21,9 @@ class RouteServiceProvider extends ServiceProvider
     public const HOME = '/';
     //public const HOME = '/dashboard';
 
+    //変数$namespaceを定義
+    protected $namespace = 'App\\Http\\Controllers'; 
+
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
      *
