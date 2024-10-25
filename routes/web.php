@@ -33,6 +33,20 @@ require __DIR__.'/auth.php';
 
 //QuizController に関連するルートを定義
 Route::controller(QuizController::class)->group(function(){
-    //トップページにアクセスした時にindexを表示
+    //トップページ(indexメソッドを呼んで、view配下のquiz/indexを返す)
     Route::get('/','index')->name('quiz.index');
+
+    //クイズを作成(createメソッドを呼んで、view配下のquiz/createを返す)
+    Route::get('/create','create')->name('quiz.create');
+
+    //クイズの登録(storeメソッドを呼んで、view配下のquiz/storeを返す)
+    Route::post('/quiz/store','store')->name('quiz.store'); 
+
+    //クイズを表示(questionIdを引数にshowメソッドを呼んで、view配下のquiz/showを返す)
+    Route::get('/quiz/{questionId}','show')->name('quiz.show');
+
+    //クイズの正解/不正解を表示(answerメソッドを呼んで、view配下のquiz/answerを返す)
+    Route::get('/quiz/answer/{questionId}','answer')->name('quiz.answer');
+    //Route::post('/quiz/answer', [QuizController::class, 'answer'])->name('quiz.answer');
+
 });
