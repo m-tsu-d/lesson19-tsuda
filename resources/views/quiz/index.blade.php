@@ -24,6 +24,12 @@
                   <a href="{{ route('quiz.list') }}" class="quizList">（管理人用）クイズを削除する</a>
                   @endcan
 
+                  <!-- ログアウトフォーム -->
+                 <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                 @csrf
+                <button type="submit" class="btn btn-logout">ログアウト</button>
+                </form>
+
         @else
                <!-- ユーザーが認証されていない場合 -->
                <p class="notice">ログインしてクイズに挑戦！</p>

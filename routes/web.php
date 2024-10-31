@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QuizController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,5 +55,9 @@ Route::controller(QuizController::class)->group(function(){
 
     //クイズを削除(destroyメソッドを呼んで、指定したquestionIdのクイズをDBから削除する)
     Route::delete('/quiz/destroy', 'destroy')->name('quiz.destroy');
+
+    //ログアウト
+    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+
 
 });
