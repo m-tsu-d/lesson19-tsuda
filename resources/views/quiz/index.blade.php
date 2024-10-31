@@ -20,7 +20,8 @@
                   @endif 
                 
                   @can('admin')
-                  <a href="{{ route('quiz.create') }}" class="quiz">管理人用</a>
+                  <a href="{{ route('quiz.create') }}" class="quiz">（管理人用）クイズを作る</a>
+                  <a href="{{ route('quiz.list') }}" class="quizList">（管理人用）クイズを削除する</a>
                   @endcan
 
         @else

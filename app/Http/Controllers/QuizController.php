@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Question; //Questionモデルの参照
 use Illuminate\Support\Facades\Gate;    //Gateモデルの参照
+use Illuminate\Support\MessageBag; //バリデーションエラーメッセージの参照
+use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class QuizController extends Controller
 {
@@ -35,23 +37,29 @@ class QuizController extends Controller
     //storeメソッドの定義
     public function store(Request $request)
     {
+ 
+        //dd($request);
+
         //バリデーション
         //問題文の作成・選択肢の作成・解答の選択を必須に設定
         //連想配列で['postしてきた値'=>'検証ルール']
         $inputs = $request->validate([
             'question' => 'required',
-            'choices' => 'required',
+            'choices.0' => 'required',
+            'choices.1' => 'required',
+            'choices.2' => 'required',
             'correct_choice' => 'required'
         ]);
 
         //作成した問題文・選択肢・解答をデータベースのテーブルに保存
         $question = new Question();
         $question->question = $inputs['question'];
-        $question->choices = $inputs['choices'];
+        $question->choices= $inputs['choices'];
         $question->correct_choice = $inputs['correct_choice'];
         $question->save();
 
-        return back();
+        // フラッシュメッセージを設定
+        return redirect()->route('quiz.create')->with('success', 'クイズの登録が完了しました。続けて新しい問題を作ることができます。');
     }
 
     //showメソッドの定義
@@ -104,4 +112,39 @@ class QuizController extends Controller
         //サンプル。91行目をcompact関数で記載すると下記になる。
         //return view('quiz.answer', compact('isCorrect', 'question', 'userAnswer', 'nextQuestionId')); 
     }
+
+    //listメソッドの定義
+    public function list()
+    {
+        //adminの権限を持っていなかったら、403エラーを発生させる
+        if(!Gate::allows('admin')){
+            abort(403);
+        }else{
+
+            //questionsテーブルの全レコードを取得
+            $questions = Question::all();
+            //listのビューを返す
+            return view('quiz.list', ['questions' => $questions]);
+        }
+    }
+
+    //deleteメソッドの定義
+    public function destroy(Request $request,$questionId)
+    {
+        //adminの権限を持っていなかったら、403エラーを発生させる
+        if(!Gate::allows('admin')){
+            abort(403);
+        }else{
+        //ビューで受け取ったquestion_id
+        $deleteQuestionId = $request->input('question_id');
+
+        // idの値で問題を検索して取得   
+        $question = Question::findOrFail($deleteQuestionId);
+        $question->delete();
+
+        // 削除したら一覧画面にリダイレクト
+        return redirect()->route('quiz.list')->with('success', "クイズID:{$deleteQuestionId}の削除が完了しました。");
+        }
+    }
+
 }

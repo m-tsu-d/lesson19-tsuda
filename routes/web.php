@@ -39,7 +39,7 @@ Route::controller(QuizController::class)->group(function(){
     //クイズを作成(createメソッドを呼んで、view配下のquiz/createを返す)
     Route::get('/create','create')->name('quiz.create');
 
-    //クイズの登録(storeメソッドを呼んで、view配下のquiz/storeを返す)
+    //クイズの登録(storeメソッドを呼んで、DBにクイズを登録する)
     Route::post('/quiz/store','store')->name('quiz.store'); 
 
     //クイズを表示(questionIdを引数にshowメソッドを呼んで、view配下のquiz/showを返す)
@@ -48,5 +48,11 @@ Route::controller(QuizController::class)->group(function(){
     //クイズの正解/不正解を表示(answerメソッドを呼んで、view配下のquiz/answerを返す)
     Route::get('/quiz/answer/{questionId}','answer')->name('quiz.answer');
     //Route::post('/quiz/answer', [QuizController::class, 'answer'])->name('quiz.answer');
+
+    //クイズの一覧を表示(listメソッドを呼んで、view配下のquiz/listを返す)
+    Route::get('/list','list')->name('quiz.list');
+
+    //クイズを削除(destroyメソッドを呼んで、指定したquestionIdのクイズをDBから削除する)
+    Route::delete('/quiz/destroy/{questionId}', 'destroy')->name('quiz.destroy');
 
 });

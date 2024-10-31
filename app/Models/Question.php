@@ -22,4 +22,6 @@ class Question extends Model
     protected $casts = [
         'choices' => 'array'
     ];
+
+    
 }
