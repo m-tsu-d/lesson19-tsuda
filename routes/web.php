@@ -53,6 +53,6 @@ Route::controller(QuizController::class)->group(function(){
     Route::get('/list','list')->name('quiz.list');
 
     //クイズを削除(destroyメソッドを呼んで、指定したquestionIdのクイズをDBから削除する)
-    Route::delete('/quiz/destroy/{questionId}', 'destroy')->name('quiz.destroy');
+    Route::delete('/quiz/destroy', 'destroy')->name('quiz.destroy');
 
 });

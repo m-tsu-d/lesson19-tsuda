@@ -129,21 +129,30 @@ class QuizController extends Controller
     }
 
     //deleteメソッドの定義
-    public function destroy(Request $request,$questionId)
+    public function destroy(Request $request)
     {
+
         //adminの権限を持っていなかったら、403エラーを発生させる
         if(!Gate::allows('admin')){
             abort(403);
         }else{
         //ビューで受け取ったquestion_id
-        $deleteQuestionId = $request->input('question_id');
+        $deleteQuestionIds = $request->input('question_ids');
 
-        // idの値で問題を検索して取得   
-        $question = Question::findOrFail($deleteQuestionId);
-        $question->delete();
+        if ($deleteQuestionIds) {
+            // 一括削除
+            Question::destroy($deleteQuestionIds);
+            $successMessage = "選択したクイズの削除が完了しました。";
+        } else {
+            $successMessage = "削除するクイズが選択されていません。";
+        }
+
+        // // idの値で問題を検索して取得   
+        // $question = Question::findOrFail($deleteQuestionId);
+        // $question->delete();
 
         // 削除したら一覧画面にリダイレクト
-        return redirect()->route('quiz.list')->with('success', "クイズID:{$deleteQuestionId}の削除が完了しました。");
+        return redirect()->route('quiz.list')->with('success', $successMessage);
         }
     }
 

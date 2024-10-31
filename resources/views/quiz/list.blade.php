@@ -12,13 +12,18 @@
 <body>
 <div class="container">
 <h2>削除するクイズを選択する</h2>
-        @if (session('success'))
-            <div class="success">{{ session('success') }}</div>
-        @endif
+    @if (session('success'))
+       <div class="success">{{ session('success') }}</div>
+    @endif
+
+     <form action="{{ route('quiz.destroy') }}" method="post">
+     @csrf
+     @method('DELETE')
 
     <table>
         <thead>
             <tr>
+                <th>選択</th>
                 <th>クイズID</th>
                 <th>問題文</th>
                 <th>選択肢１</th>
@@ -32,29 +37,24 @@
         <tbody>
             @foreach($questions as $question)
             <tr>
+                <td><input type="checkbox" name="question_ids[]" value="{{ $question->id }}"></td>
                 <td>{{$question->id}}</td>
                 <td>{{$question->question}}</td>
                 <td>{{$question->choices[0]}}</td>
                 <td>{{$question->choices[1]}}</td>
                 <td>{{$question->choices[2]}}</td>
                 <td>{{$question->correct_choice}}</td>
-                <td>
-                    <form action="{{ route('quiz.destroy', ['questionId' => $question->id]) }}" method="post">
-                        <input type="hidden" name="question_id" value="{{ $question->id }}">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-error btn-sm normal-case" onClick="return confirm('クイズID:{{ $question->id }} を本当に削除しますか?');">削除</button>
-                    </form>
-                </td>
             </tr>
             @endforeach
         </tbody>
-    </table>
+     </table>
+
+     <button type="submit" class="btn btn-error btn-sm normal-case" onClick="return confirm('選択したクイズを本当に削除しますか?');">削除</button>
+     </form>
 </div>
 
     <div class="link">
         <a href="/" class="link">トップページに戻る</a>
     </div>
 </body>
-
 </html>
