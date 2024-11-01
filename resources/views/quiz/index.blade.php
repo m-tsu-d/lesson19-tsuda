@@ -2,44 +2,74 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{{ asset('css/index.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('css/reset.css') }}" rel="stylesheet" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    @vite('resources/css/app.css')
     <title>3択クイズ</title>
 </head>
-<body>
-    <div class="container">
-        <h2>3択クイズ</h2>
-        <div class="login">       
+<body class="flex flex-col items-center justify-center min-h-screen">
+
+    <div class="text-center mb-8">
+    <h1 class="text-8xl font-bold text-black" style="font-size: 30px;">3択クイズ</h1>
+    <br>
         @auth
-                <!-- コントローラーから$firstQuestionIdを受け取る -->
-                <!-- クイズが1問も作成されていない時は表示されない -->
-                  @if($firstQuestionId)
-                  <a href="{{ route('quiz.show',['questionId' => $firstQuestionId]) }}" class="quiz">クイズに挑戦</a>
-                  @endif 
-                
-                  @can('admin')
-                  <a href="{{ route('quiz.create') }}" class="quiz">（管理人用）クイズを作る</a>
-                  <a href="{{ route('quiz.list') }}" class="quizList">（管理人用）クイズを削除する</a>
-                  <a href="{{ route('quiz.accountList') }}" class="quizList">（管理人用）アカウント管理</a>
-                  @endcan
-
-                  <!-- ログアウトフォーム -->
-                 <form action="{{ route('logout') }}" method="POST" style="display: inline;">
-                 @csrf
-                <button type="submit" class="btn btn-logout">ログアウト</button>
-                </form>
-
-        @else
-               <!-- ユーザーが認証されていない場合 -->
-               <p class="notice">ログインしてクイズに挑戦！</p>
-               <div>
-                  <a href="{{ route('login') }}">ログイン</a>
-                  <a href="{{ route('register') }}">アカウント登録</a>
-               </div>
-        @endif 
-        </div>
+            <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                @csrf
+                <button type="submit" class="btn btn-primary btn-block normal-case">
+                    ログアウト
+                </button>
+            </form>
+        @endauth
     </div>
+
+    
+    <div class="login space-y-4">
+        @auth
+            @if($firstQuestionId)
+            <br>
+            <div class="flex justify-center space-x-4">
+            
+                @if($firstQuestionId)
+               
+                <a href="{{ route('quiz.show',['questionId' => $firstQuestionId]) }}" class="btn btn-primary btn-block normal-case">
+                    クイズに挑戦！全問正解するとダイヤル鍵の番号が明かされます。
+                </a>
+                @endif 
+                
+            </div>
+            <br>
+            @endif
+
+            @can('admin')
+                <div class="flex flex-col items-center space-y-4">
+                
+                    <a href="{{ route('quiz.create') }}" class="btn btn-primary btn-block normal-case">
+                        （管理人用）クイズを作る
+                    </a>
+                    <br>
+                    <a href="{{ route('quiz.list') }}" class="btn btn-primary btn-block normal-case">
+                        （管理人用）クイズを削除する
+                    </a>
+                    <br>
+                    <a href="{{ route('quiz.accountList') }}" class="btn btn-primary btn-block normal-case">
+                        （管理人用）アカウント管理
+                    </a>
+                </div>
+            
+            @endcan
+        @else
+            <p class="text-lg font-semibold" >ログインしてクイズに挑戦！</p>
+            <div class="flex flex-col items-center space-y-4">
+                <a href="{{ route('login') }}" class="btn btn-primary btn-block normal-case">
+                    ログイン
+                </a>
+                <br>
+                <a href="{{ route('register') }}" class="btn btn-primary btn-block normal-case">
+                    アカウント登録
+                </a>
+            </div>
+        @endif 
+    </div>
+    
 </body>
 </html>
