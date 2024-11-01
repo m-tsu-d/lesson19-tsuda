@@ -1,66 +1,52 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<img width="1416" alt="スクリーンショット 2024-11-01 17 38 12" src="https://github.com/user-attachments/assets/22d3de4f-32ae-4a15-823c-b833ed0fd6c2">**贈り物にワクワク体験を添える３択クイズアプリ**
+【こんなシーンでご利用いただけます。】
+友人への贈り物に会えて、ダイヤル鍵をかける。
+このアプリのurlとログイン情報を記したカードを添える。
+それだけで、離れてい暮らす友人とワクワクする体験を共有できます！
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**ログイン／ユーザー登録**
+プレゼントの送り先のアカウントは作成済みです。
+送られてきたカードの情報をもとに、画面中央にある「ログイン」ボタンからログインできます。
+<img width="1438" alt="スクリーンショット 2024-11-01 17 29 58" src="https://github.com/user-attachments/assets/00d9b9cc-3d57-4bcd-b305-b2de2790a0a6">
+※自分でアカウント登録して、単純にクイズを楽しむこともできます。
 
-## About Laravel
+**３択クイズに挑戦**
+「クイズに挑戦！」ボタンを押すと、３択クイズが始まります。
+<img width="1409" alt="スクリーンショット 2024-11-01 17 34 56" src="https://github.com/user-attachments/assets/7cdc92ff-7c60-4fe1-84f0-c112040eae47">
+<img width="1430" alt="スクリーンショット 2024-11-01 17 37 09" src="https://github.com/user-attachments/assets/1819e2c8-ad78-4fcf-ad9a-ce4cd61fadd9">
+クイズに全問正解すると、ダイヤル鍵の番号が表示されます。
+この番号で、贈り物にかけられたダイヤル鍵を解錠できます。
+<img width="1416" alt="スクリーンショット 2024-11-01 17 38 12" src="https://github.com/user-attachments/assets/a4d91e93-8100-4604-b42d-71c262737f53">
+※１つでも間違えると、ダイヤル鍵の番号が表示されません。
+　同じ問題に繰り返し挑戦することができます。
+※自分でアカウント登録した方には、ダイヤル鍵の番号は表示されません。
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+**３つの管理者用メニュー**
+管理者権限のあるアカウントでログインすると、「クイズに挑戦！」以外に３つの管理者用メニューが表示されます。
+<img width="1418" alt="スクリーンショット 2024-11-01 17 45 38" src="https://github.com/user-attachments/assets/cc085999-9b5e-4f32-ab7e-f950fc628730">
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+**クイズを作る**
+フォーマットに沿って、新しい３択クイズを作ることができます。
+<img width="1426" alt="スクリーンショット 2024-11-01 17 47 01" src="https://github.com/user-attachments/assets/48b63ee8-ac2c-4c17-9f6a-035102254a3b">
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+**クイズを削除する**
+登録済みの３択クイズを一覧で確認することができます。
+出題したくない３択クイズは、選択して削除することができます。
+<img width="1440" alt="スクリーンショット 2024-11-01 17 50 16" src="https://github.com/user-attachments/assets/3e512f8d-38a9-4c11-b6f3-a829036114eb">
 
-## Learning Laravel
+**アカウントを管理する**
+登録済みの一覧を確認することができます。
+指定のアカウントに送るダイヤル錠の番号を「キー番号」に登録します。
+「キー番号」は変更ができます。
+「キー番号」が空欄のアカウントは、３択クイズを純粋に楽しむことができます。
+<img width="1415" alt="スクリーンショット 2024-11-01 17 53 48" src="https://github.com/user-attachments/assets/f4115f80-460c-4986-931c-0d0011440890">
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+**ローカル環境での起動手順**
+①マイグレーション実行後、３つのシーダーを実行。
+`php artisan db:seed --class=QuestionsTableSeeder`
+`php artisan db:seed --class=Role_UserTableSeeder`
+`php artisan db:seed --class=RolesTableSeeder`
+②「アカウント登録」からアカウント作成。
+最初に作成されたアカウントに管理者権限が付与されます。
+２つ目以降のアカウントには、ユーザー権限が付与されます。
+③管理者権限のアカウントでログインし、ユーザー権限のアカウントの「キー番号」を設定。
