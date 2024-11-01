@@ -7,6 +7,8 @@ use App\Models\Question; //Questionモデルの参照
 use Illuminate\Support\Facades\Gate;    //Gateモデルの参照
 use Illuminate\Support\MessageBag; //バリデーションエラーメッセージの参照
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use App\Models\User; //Userモデルの参照
+use Illuminate\Support\Facades\Auth;
 
 class QuizController extends Controller
 {
@@ -76,6 +78,13 @@ class QuizController extends Controller
     //answerメソッドの定義
     public function answer(Request $request,$questionId)
     {
+        // トータル問題数を取得
+       $totalQuestions = Question::count();
+
+       // セッションから現在の正解数を取得
+       // セッションに保存されている'correct_answers'というキーが存在しない場合、初期値を0とする。
+       $correctAnswers = session('correct_answers', 0);
+
         //ビューで受け取ったユーザーの解答とquestion_id
         $userAnswer = $request->input('choice');
         $questionId = $request->input('question_id');
@@ -91,26 +100,64 @@ class QuizController extends Controller
         //ユーザーが選択した解答とクイズデータの正解を比較
         if ($userAnswer == $correctChoiceIndex) {
             $isCorrect = true;
+
+             // 正解数を1増やしてセッションに保存
+             $correctAnswers++;
+             session(['correct_answers' => $correctAnswers ]);
+
         } else {
             $isCorrect = false;
+            //不正解であればセッション'correct_answers'を0に初期化する。
+            session(['correct_answers' => 0]);
         }
 
         //ビューで受け取ったquestion_idより値の大きくかつ、昇順で先頭のクイズのidを取得
         $nextQuestionId = Question::where('id', '>', $questionId)->first();
 
-        $firstQuestionId = $questionId;
+        // ログイン中のユーザーのキー番号を取得
+        $userKeyNumber = Auth::user()->key_number ?? null;
 
-        // return view('quiz.index',compact('firstQuestionId'));
 
-        return view('quiz.answer',[
-            'isCorrect' =>  $isCorrect,
+       // 最後の問題かどうかを確認し、全問正解かどうかを判定
+    if (!$nextQuestionId) {
+        // 全問正解の場合
+        if ($correctAnswers == $totalQuestions) {
+
+            //セッション'correct_answers'の初期化
+            session(['correct_answers' => 0]);
+
+            return view('quiz.answer', [
+                'isCorrect' => $isCorrect,
+                'question' => $question,
+                'userAnswer' => $userAnswer,
+                'nextQuestionId' => null, // 最後の問題なのでNULL
+                'userKeyNumber' => $userKeyNumber // 全問正解であればキー番号を渡す
+            ]);
+        } else {
+
+            //セッション'correct_answers'の初期化
+            session(['correct_answers' => 0]);
+
+            // 全問正解でない場合
+            return view('quiz.answer', [
+                'isCorrect' => $isCorrect,
+                'question' => $question,
+                'userAnswer' => $userAnswer,
+                'nextQuestionId' => null,
+                'userKeyNumber' => null // 全問正解でない場合はNULLを渡す
+            ]);
+        }
+    } else {
+        // 次の問題があれば次の問題へ進む
+        return view('quiz.answer', [
+            'isCorrect' => $isCorrect,
             'question' => $question,
             'userAnswer' => $userAnswer,
-            'nextQuestionId' => $nextQuestionId
+            'nextQuestionId' => $nextQuestionId,
+            'userKeyNumber' => null // 途中の問題なのでNULLを渡す
         ]);
-
-        //サンプル。91行目をcompact関数で記載すると下記になる。
-        //return view('quiz.answer', compact('isCorrect', 'question', 'userAnswer', 'nextQuestionId')); 
+    }
+    
     }
 
     //listメソッドの定義
@@ -155,5 +202,51 @@ class QuizController extends Controller
         return redirect()->route('quiz.list')->with('success', $successMessage);
         }
     }
+
+     //accountListメソッドの定義
+     public function accountList()
+     {
+         //adminの権限を持っていなかったら、403エラーを発生させる
+         if(!Gate::allows('admin')){
+             abort(403);
+         }else{
+ 
+             //usersテーブルの全レコードを取得
+             $users = User::all();
+
+             //accountListのビューを返す
+             return view('quiz.accountList', ['users' => $users]);
+         }
+     }
+
+     //updateKeyNumbersメソッドの定義
+     public function updateKeyNumbers(Request $request)
+    {
+
+       // バリデーションルール
+       $request->validate([
+        'user_ids' => 'required|array',
+        'key_numbers' => 'required|array',
+        'key_numbers.*' => 'nullable|numeric', // 各キー番号が数字であることを確認
+        ]);
+
+        // チェックボックスで選択されたユーザーIDの配列を取得
+        $userIds = $request->input('user_ids');
+        // 各ユーザーの新しいキー番号を取得
+        $keyNumbers = $request->input('key_numbers');
+
+        // 選択されたユーザーのキー番号を更新
+        foreach ($userIds as $userId) {
+            $user = User::find($userId);
+            if ($user) {
+                // 新しいキー番号を設定
+                $user->key_number = $keyNumbers[$userId] ?? $user->key_number; // 新しい値がなければ元の値を維持
+                $user->save();
+            }
+        }
+
+        return redirect()->back()->with('success', 'キー番号が更新されました。');
+    }
+ 
 
 }

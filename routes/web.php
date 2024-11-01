@@ -59,5 +59,10 @@ Route::controller(QuizController::class)->group(function(){
     //ログアウト
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
+    ///アカウントの一覧を表示(accountListメソッドを呼んで、view配下のquiz/accountListを返す)
+    Route::get('/accountList','accountList')->name('quiz.accountList');
+
+    Route::post('/accountList/update-key-numbers', 'updateKeyNumbers')->name('quiz.updateKeyNumbers');
+
 
 });

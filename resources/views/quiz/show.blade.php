@@ -11,16 +11,16 @@
 </head>
 <body>
     <div class="container">
-    <!--　コントローラーから$questionを受け取り、問題文を表示 --> 
+    <!-- コントローラーから$questionを受け取り、問題文を表示 --> 
     <h2>{{ $question->question }}</h2>
     <div class="question-wrap">
         <form action="{{ route('quiz.answer',['questionId' => $question->id]) }}" method="get">
-            <!--　ユーザーによる入力フォームなので、CSRF対策を行う　-->
-            <!--　CSRF保護ミドルウェアがリクエストを検証　-->
+            <!-- ユーザーによる入力フォームなので、CSRF対策を行う -->
+            <!-- CSRF保護ミドルウェアがリクエストを検証 -->
              @csrf
-            <!--　問題のidカラムの値を取得　--> 
+            <!-- 問題のidカラムの値を取得 --> 
             <input type="hidden" name="question_id" value="{{ $question->id }}">
-            <!--　$question->choicesは配列型。$indexがkeyで$choiceがvalue　-->
+            <!-- $question->choicesは配列型。$indexがkeyで$choiceがvalue -->
             @foreach($question->choices as $index => $choice)
                 <div>
                     <label>

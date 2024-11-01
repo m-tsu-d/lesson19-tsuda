@@ -36,7 +36,7 @@ class QuestionsTableSeeder extends Seeder
             'id' => '3',
             'question' => 'この中で神奈川県綾瀬市出身について「正しくない」記述は？',
             'choices' => json_encode(['豚も鶏も牛も飼育されている', '消防署や警察署だけでなく海上自衛隊の基地もある', '新幹線が市内を通っている']),
-            'correct_choice' => '3',
+            'correct_choice' => '2',
             'created_at' => now(),
         ]);
     }
